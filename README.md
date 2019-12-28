@@ -19,7 +19,7 @@ Paste Some Code Here!
 
 ## Authors
 
-* **ِYour Name**- [your github ID](https://github.com/your github id)
+* **ِYour Name**- [your github ID](https://github.com/amirmahdigfx)
 
 ## License
 
@@ -27,6 +27,5 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Bullet Point
 
-* Bullet 1
-* Bullet 2
+
 * etc
