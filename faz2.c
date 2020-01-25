@@ -2,7 +2,10 @@
 #include <stdlib.h>
 #include <windows.h>
 #include <conio.h>
-char B[100][100]={'\0'};
+
+HANDLE hConsole;
+
+char B[100][100];
 void Handheldgame()
 {
 	int countsatr = 0 , countsoton = 0;
@@ -12,25 +15,42 @@ void Handheldgame()
     {
         for (int j = 0 ; j < 100 ; j++)
         {
-            if (B[i][j]=='0')
-            {
-                x=i;
-                y=j;
-            }
             if (B[i][j]=='*')
             {
                 flag = 1;
             }
+			if (B[i][j]=='0')
+            {
+                x=i;
+                y=j;
+            }
         }
     }
-	if (flag==0) 
-	{
-		return;
-	}
 	system("cls");
 	for (int i=0;i<20;i++)
 	{
-		printf("%s\n",B[i]);
+		for (int j = 0; j < 10; j++){
+			int p = 0;
+			switch(B[i][j]){
+				case '0': 
+					p = 67;
+					SetConsoleTextAttribute(hConsole, 14);
+					break;
+				case '1':
+					p = ' ';
+					SetConsoleTextAttribute(hConsole, 15);
+					break;
+				case '*' :
+					p = 248;
+					SetConsoleTextAttribute(hConsole, 12);
+					break;
+				case '#' :
+					p = 178;
+					SetConsoleTextAttribute(hConsole, 9);
+			}
+			printf ("%c",p);
+			if (j==9) printf ("\n");
+		}
 	}
 	int ch1;
 	char ch2;
@@ -63,20 +83,19 @@ void Handheldgame()
             };
         }
     }
-	int l=0,kk=0;
-	if (h=='u')
+	if (h=='u'&&x!=0)
 	{
 		countsatr--;
 	}
-	if (h=='d') 
+	if (h=='d'&&x!=4) 
 	{
 		countsatr++;
 	}
-	if (h=='r')
+	if (h=='r'&&y!=9)
 	{
 		countsoton++;
 	}
-	if (h=='l') 
+	if (h=='l'&&y!=0) 
 	{
 		countsoton--;
 	}
@@ -90,13 +109,35 @@ void Handheldgame()
 			{
 				B[bordX][bordY]='0';
 			}
-		} 
+		}
+		else 
+		{
+			x=0;
+			y=0;
+		}
+	}
+	if (flag==0) 
+	{
+		return;
 	}
 	Handheldgame();
 }
 int main()
 {
-	FILE *ptf = fopen("C:\\Users\\amirps\\Desktop\\Testcase02.txt","r");
+	hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	
+	char add[1000];
+	printf ("ENTER FILE ADDRESS : ");
+	scanf ("%s",add);
+	FILE *ptf = fopen(add,"r");
+	while (ptf==NULL)
+	{
+		printf ("YOUR ADDRESS WAS WRONG\n");
+		printf ("ENTER FILE ADDRESS :");
+		scanf ("%s",add);
+		ptf = fopen(add,"r");
+		break;
+	}
 	int i = 0,j = 0;
 	char ch1;
 	fscanf(ptf,"%c",&ch1);
